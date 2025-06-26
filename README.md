@@ -61,14 +61,20 @@ Where's My Track is a modern web app that helps you discover all the digital ser
 
 ## Usage
 
-1. **Find your Spotify Track URI:**  
-   [How to find your Spotify URI? (Soundrop Guide)](https://support.soundrop.com/hc/en-us/articles/360043859092-How-to-Find-Your-Spotify-URI)
+You can now enter **either** a Spotify Track URI or a Spotify Track Link in the search form. The app will automatically convert a valid Spotify track link to the corresponding URI before searching.
 
-2. **Paste the URI in the search box.**  
-   Example: `spotify:track:6iU7U8JPOP78CegxUnSEWC`
+### Example Inputs
 
-3. **Submit and view results:**  
-   Instantly see links to your track on all supported platforms.
+- **Spotify Track URI:**
+  ```
+  spotify:track:1mZF9TEc7gpw7by7NCZSKr
+  ```
+- **Spotify Track Link:**
+  ```
+  https://open.spotify.com/track/1mZF9TEc7gpw7by7NCZSKr?si=V73PbQq_RfCXXDGH-gWwdQ
+  ```
+
+Both formats above will work. If you enter a link, it will be auto-parsed to the URI format before searching.
 
 ---
 

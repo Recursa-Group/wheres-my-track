@@ -8,16 +8,25 @@ export default function SearchForm({ onSearch, isLoading, error }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validate input format: must be 'spotify:track:{id}'
+    let input = url.trim();
+    let uri = input;
+    // If input is a Spotify track URL, convert to URI
+    const spotifyUrlRegex =
+      /^https?:\/\/open\.spotify\.com\/track\/([a-zA-Z0-9]+)(\?.*)?$/;
     const spotifyTrackRegex = /^spotify:track:[a-zA-Z0-9]+$/;
-    if (!spotifyTrackRegex.test(url)) {
+    const urlMatch = input.match(spotifyUrlRegex);
+    if (urlMatch) {
+      uri = `spotify:track:${urlMatch[1]}`;
+    }
+    if (!spotifyTrackRegex.test(uri)) {
       setLocalError(
-        "Invalid input: Please enter a valid Spotify Track URI in the format 'spotify:track:{id}'."
+        "Invalid input: Please enter a valid Spotify Track URI (spotify:track:{id}) or a Spotify track link."
       );
       return;
     }
     setLocalError("");
-    onSearch(url);
+    console.log("URI:", uri);
+    onSearch(uri);
   };
 
   return (
@@ -81,7 +90,7 @@ export default function SearchForm({ onSearch, isLoading, error }) {
       <div style={{ color: "#d1d5db", fontSize: "1.08rem", marginBottom: 28 }}>
         Find your track's source on every DSP.
         <br />
-        Just enter your Spotify URI or ISRC code!
+        Just enter your Spotify Link or URI code!
       </div>
       <div
         style={{
@@ -162,7 +171,7 @@ export default function SearchForm({ onSearch, isLoading, error }) {
             borderRadius: "6px",
           }}
         >
-          Enter a Spotify URI
+          Enter a Spotify URI or Track Link
         </label>
       </div>
       {error && (
