@@ -4,9 +4,19 @@ export default function SearchForm({ onSearch, isLoading, error }) {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const [url, setUrl] = useState("");
+  const [localError, setLocalError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Validate input format: must be 'spotify:track:{id}'
+    const spotifyTrackRegex = /^spotify:track:[a-zA-Z0-9]+$/;
+    if (!spotifyTrackRegex.test(url)) {
+      setLocalError(
+        "Invalid input: Please enter a valid Spotify Track URI in the format 'spotify:track:{id}'."
+      );
+      return;
+    }
+    setLocalError("");
     onSearch(url);
   };
 
@@ -72,6 +82,24 @@ export default function SearchForm({ onSearch, isLoading, error }) {
         Find your track's source on every DSP.
         <br />
         Just enter your Spotify URI or ISRC code!
+      </div>
+      <div
+        style={{
+          color: "#a78bfa",
+          fontSize: "0.98rem",
+          marginBottom: 18,
+          textAlign: "left",
+        }}
+      >
+        <span>How to find your Spotify URI? </span>
+        <a
+          href="https://support.soundrop.com/hc/en-us/articles/360043859092-How-to-Find-Your-Spotify-URI"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#c084fc", textDecoration: "underline" }}
+        >
+          Read this guide
+        </a>
       </div>
       <div
         className="form-group"
@@ -149,6 +177,18 @@ export default function SearchForm({ onSearch, isLoading, error }) {
           {error}
         </div>
       )}
+      {localError && (
+        <div
+          style={{
+            color: "#ff6b6b",
+            marginTop: "-1rem",
+            marginBottom: "1rem",
+            textAlign: "center",
+          }}
+        >
+          {localError}
+        </div>
+      )}
       <button
         type="submit"
         disabled={isLoading}
@@ -188,7 +228,15 @@ export default function SearchForm({ onSearch, isLoading, error }) {
           letterSpacing: 0.2,
         }}
       >
-        © 2025 by Recursa
+        © 2025 by{" "}
+        <a
+          href="https://github.com/Recursa-Group/wheres-my-track"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#a855f7", textDecoration: "underline" }}
+        >
+          Recursa
+        </a>
       </div>
     </form>
   );

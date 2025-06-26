@@ -1,29 +1,21 @@
-const axios = require("axios");
-const cors = require("cors");
-
-const corsMiddleware = cors();
+import axios from "axios";
 
 export default async function handler(req, res) {
-  await new Promise((resolve, reject) => {
-    corsMiddleware(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-
   if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).end(`Method ${req.method} Not Allowed`);
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { url } = req.body;
+  let url;
+  try {
+    url = req.body.url || JSON.parse(req.body).url;
+  } catch {
+    url = undefined;
+  }
   if (!url) {
     return res.status(400).json({ error: "URL is required" });
   }
 
-  const apiUrl = "https://api.song.link/v1-alpha.1/links";
+  const apiUrl = process.env.API_URL;
   const params = {
     url,
     userCountry: "US",
@@ -41,6 +33,10 @@ export default async function handler(req, res) {
     res.status(200).json(data);
   } catch (err) {
     console.error(err.response?.data || err.message);
-    res.status(500).json({ error: "Failed to fetch track information." });
+    const errorMsg =
+      typeof err.response?.data?.error === "string"
+        ? err.response.data.error
+        : err.message || "Failed to fetch track information.";
+    res.status(500).json({ error: errorMsg });
   }
 }
