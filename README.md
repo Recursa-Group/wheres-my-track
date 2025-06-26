@@ -18,8 +18,7 @@ Where's My Track is a modern web app that helps you discover all the digital ser
 
 ## Demo
 
-> [Live Demo](https://your-vercel-deployment-url.vercel.app)  
-> _(Replace with your actual Vercel deployment URL)_
+> [Live Demo](https://wheres-my-track.vercel.app/)
 
 ---
 
