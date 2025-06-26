@@ -1,0 +1,42 @@
+body,
+html,
+#root,
+.app-root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.app-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+.three-canvas {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+.overlay-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+@media (max-width: 600px) {
+  .overlay-form {
+    padding: 1rem;
+  }
+}
